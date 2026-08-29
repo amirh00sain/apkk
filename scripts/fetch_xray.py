@@ -14,7 +14,6 @@ from __future__ import annotations
 import argparse
 import io
 import json
-import os
 import platform
 import shutil
 import stat
@@ -24,16 +23,16 @@ from pathlib import Path
 from urllib.request import Request, urlopen
 from urllib.error import URLError
 
-XRAY_VERSION = "2.6.24"
-GITHUB_API = "https://api.github.com/repos/XTLS/Xray-core/releases/tags/v" + XRAY_VERSION
+XRAY_VERSION = "26.3.27"
 
+# Direct download URLs (no auth needed) keyed by (os, arch).
 _ASSET_MAP: dict[tuple[str, str], str] = {
-    ("linux",  "amd64"): "Xray-linux-64.zip",
-    ("linux",  "arm64"): "Xray-linux-arm64-v8a.zip",
-    ("darwin", "amd64"): "Xray-macos-arm64.zip",
-    ("darwin", "arm64"): "Xray-macos-arm64.zip",
-    ("windows","amd64"): "Xray-windows-64.zip",
-    ("android","arm64"): "Xray-linux-arm64-v8a.zip",
+    ("linux",  "amd64"): f"https://github.com/XTLS/Xray-core/releases/download/v{XRAY_VERSION}/Xray-linux-64.zip",
+    ("linux",  "arm64"): f"https://github.com/XTLS/Xray-core/releases/download/v{XRAY_VERSION}/Xray-linux-arm64-v8a.zip",
+    ("darwin", "amd64"): f"https://github.com/XTLS/Xray-core/releases/download/v{XRAY_VERSION}/Xray-macos-arm64.zip",
+    ("darwin", "arm64"): f"https://github.com/XTLS/Xray-core/releases/download/v{XRAY_VERSION}/Xray-macos-arm64.zip",
+    ("windows","amd64"): f"https://github.com/XTLS/Xray-core/releases/download/v{XRAY_VERSION}/Xray-windows-64.zip",
+    ("android","arm64"): f"https://github.com/XTLS/Xray-core/releases/download/v{XRAY_VERSION}/Xray-android-arm64-v8a.zip",
 }
 
 
@@ -49,17 +48,9 @@ def _detect_platform() -> tuple[str, str]:
     return system, arch
 
 
-def _download_json(url: str) -> dict:
-    req = Request(url, headers={"Accept": "application/vnd.github+json"})
-    with urlopen(req, timeout=30) as resp:  # noqa: S310
-        return json.loads(resp.read())
-
-
 def _download_asset(url: str) -> bytes:
-    req = Request(url, headers={
-        "Accept": "application/octet-stream",
-        "Authorization": "token " + os.environ.get("GITHUB_TOKEN", ""),
-    })
+    """Download a release asset.  GitHub release assets follow redirects."""
+    req = Request(url, headers={"Accept": "application/octet-stream"})
     with urlopen(req, timeout=120) as resp:  # noqa: S310
         return resp.read()
 
@@ -67,29 +58,17 @@ def _download_asset(url: str) -> bytes:
 def fetch(output_dir: str = "bin") -> str:
     """Download xray and return the path to the extracted binary."""
     system, arch = _detect_platform()
-    asset_name = _ASSET_MAP.get((system, arch))
-    if not asset_name:
+    download_url = _ASSET_MAP.get((system, arch))
+    if not download_url:
         print(f"[fetch_xray] Unsupported platform: {system}/{arch}", file=sys.stderr)
         sys.exit(1)
 
     print(f"[fetch_xray] Fetching xray {XRAY_VERSION} for {system}/{arch} …")
     try:
-        info = _download_json(GITHUB_API)
+        raw = _download_asset(download_url)
     except URLError as exc:
-        print(f"[fetch_xray] Failed to reach GitHub API: {exc}", file=sys.stderr)
+        print(f"[fetch_xray] Download failed ({download_url}): {exc}", file=sys.stderr)
         sys.exit(1)
-
-    download_url = None
-    for asset in info.get("assets", []):
-        if asset["name"] == asset_name:
-            download_url = asset["browser_download_url"]
-            break
-
-    if not download_url:
-        print(f"[fetch_xray] Asset {asset_name} not found in release v{XRAY_VERSION}", file=sys.stderr)
-        sys.exit(1)
-
-    raw = _download_asset(download_url)
     print(f"[fetch_xray] Downloaded {len(raw):,} bytes — extracting …")
 
     out = Path(output_dir)
