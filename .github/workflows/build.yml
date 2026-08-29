@@ -107,11 +107,6 @@ jobs:
         run: pip install -e ".[dev,gui]"
       - name: Fetch xray (android arm64)
         run: python scripts/fetch_xray.py -o android/app/src/main/assets
-      - name: Flet build web (for WebView assets)
-        run: |
-          mkdir -p android/app/src/main/assets/web
-          yes | flet build web
-          cp -r build/web/* android/app/src/main/assets/web/
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
         with:
