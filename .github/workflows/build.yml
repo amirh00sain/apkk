@@ -59,15 +59,7 @@ jobs:
           cp dist/netprobe-gui "$APPDIR/usr/bin/"
           cp bin/xray "$APPDIR/usr/bin/xray"
           # .desktop file
-          cat > "$APPDIR/netprobe.desktop" << 'EOF'
-          [Desktop Entry]
-          Type=Application
-          Name=NetProbe
-          Exec=netprobe-gui
-          Icon=utilities-terminal
-          Categories=Network;
-          EOF
-          sed -i 's/^          //' "$APPDIR/netprobe.desktop"
+          printf '[Desktop Entry]\nType=Application\nName=NetProbe\nExec=netprobe-gui\nCategories=Network;\n' > "$APPDIR/netprobe.desktop"
           cp "$APPDIR/netprobe.desktop" "$APPDIR/usr/share/applications/"
           # linuxdeploy
           wget -q https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage

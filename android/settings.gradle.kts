@@ -1,4 +1,4 @@
-# NetProbe Android wrapper — real VPNService (TUN) + embedded xray.
+// NetProbe Android wrapper — real VPNService (TUN) + embedded xray.
 pluginManagement {
     repositories {
         google()
