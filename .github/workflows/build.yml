@@ -58,9 +58,38 @@ jobs:
           mkdir -p "$APPDIR/usr/bin" "$APPDIR/usr/share/applications"
           cp dist/netprobe-gui "$APPDIR/usr/bin/"
           cp bin/xray "$APPDIR/usr/bin/xray"
-          # .desktop file
-          printf '[Desktop Entry]\nType=Application\nName=NetProbe\nExec=netprobe-gui\nCategories=Network;\n' > "$APPDIR/netprobe.desktop"
+          # .desktop file (needs Icon= for linuxdeploy)
+          printf '[Desktop Entry]\nType=Application\nName=NetProbe\nExec=netprobe-gui\nIcon=netprobe\nCategories=Network;\n' > "$APPDIR/netprobe.desktop"
           cp "$APPDIR/netprobe.desktop" "$APPDIR/usr/share/applications/"
+          # Generate a simple PNG icon (green circle with N) for the AppImage.
+          python3 - << 'PYEOF'
+          from struct import pack
+          W = H = 256
+          # Minimal PNG: green background, white N drawn as two diagonal strokes.
+          px = bytearray()
+          for y in range(H):
+              px.append(0)  # filter byte
+              for x in range(W):
+                  # background green
+                  r, g, b = 31, 138, 76
+                  # white N: left vertical + diagonal + right vertical
+                  if (x < 70 and y > 60) or (x > 186 and y < 200) or (50 < x < 206 and abs(y - (H - x)) < 18):
+                      r, g, b = 255, 255, 255
+                  px += pack("BBB", r, g, b)
+          def chunk(typ, data):
+              c = pack(">I", len(data)) + typ + data
+              import zlib
+              c += pack(">I", zlib.crc32(typ + data) & 0xffffffff)
+              return c
+          import zlib
+          raw = bytes(px)
+          png = b"\x89PNG\r\n\x1a\n"
+          png += chunk(b"IHDR", pack(">IIBBBBB", W, H, 8, 2, 0, 0, 0))
+          png += chunk(b"IDAT", zlib.compress(raw, 9))
+          png += chunk(b"IEND", b"")
+          with open("$APPDIR/usr/share/icons/hicolor/256x256/apps/netprobe.png", "wb") as f:
+              f.write(png)
+          PYEOF
           # linuxdeploy
           wget -q https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
           chmod +x linuxdeploy-x86_64.AppImage
