@@ -174,6 +174,7 @@ class TestOfflinePcapBackend:
         assert b.read_packet() is None
 
     def test_start_calls_rdpcap(self):
+        pytest.importorskip("scapy")
         import scapy.all
         b = OfflinePcapBackend("x.pcap")
         with patch("scapy.all.rdpcap", return_value=iter([])) as m_rdpcap:
@@ -185,6 +186,7 @@ class TestOfflinePcapBackend:
 
     def test_detect_with_scapy_installed(self):
         # scapy is installed in the venv, so detect() should return True.
+        pytest.importorskip("scapy")
         assert OfflinePcapBackend.detect() is True
 
 
