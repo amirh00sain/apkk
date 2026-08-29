@@ -1,0 +1,112 @@
+{
+  "remarks": "NetProbe Android config — credits: @patterniha (SNI-Spoofing project reference)",
+  "inbounds": [
+    {
+      "tag": "mixed-in",
+      "port": 10808,
+      "protocol": "mixed",
+      "listen": "127.0.0.1",
+      "sniffing": {
+        "enabled": true,
+        "destOverride": ["fakedns", "tls", "http", "quic"],
+        "routeOnly": false
+      },
+      "settings": {"udp": true, "ip": "127.0.0.1"},
+      "streamSettings": {
+        "sockopt": {
+          "tcpKeepAliveInterval": 1,
+          "tcpKeepAliveIdle": 11
+        },
+        "security": "tls",
+        "tlsSettings": {
+          "fragment": {
+            "enabled": true,
+            "length": "100-200",
+            "sleep": "50-100"
+          }
+        }
+      }
+    }
+  ],
+  "outbounds": [
+    {"tag": "block", "protocol": "block"},
+    {
+      "tag": "direct",
+      "protocol": "direct",
+      "streamSettings": {
+        "sockopt": {
+          "domainStrategy": "ForceIP",
+          "happyEyeballs": {"tryDelayMs": 300, "prioritizeIPv6": false, "interleave": 2, "maxConcurrentTry": 20}
+        }
+      }
+    },
+    {
+      "tag": "dns-out",
+      "protocol": "dns",
+      "settings": {"userLevel": 1}
+    },
+    {
+      "tag": "tor-out",
+      "protocol": "socks",
+      "settings": {
+        "servers": [{"address": "127.0.0.1", "port": 9050}]
+      },
+      "streamSettings": {
+        "sockopt": {"domainStrategy": "UseIP"}
+      }
+    }
+  ],
+  "dns": {
+    "queryStrategy": "UseIPv4",
+    "useSystemHosts": true,
+    "disableCache": false,
+    "disableFallback": false,
+    "servers": [
+      {
+        "address": "https://cloudflare-dns.com/dns-query",
+        "domains": ["geosite:geolocation-!cn"],
+        "timeoutMs": 6000,
+        "queryStrategy": "UseIPv4",
+        "skipFallback": false
+      },
+      {
+        "address": "localhost",
+        "domains": [
+          "geosite:private",
+          "domain:ir",
+          "domain:local",
+          "domain:localhost"
+        ]
+      }
+    ]
+  },
+  "routing": {
+    "domainStrategy": "IPOnDemand",
+    "rules": [
+      {"outboundTag": "dns-out", "port": 53},
+      {
+        "outboundTag": "direct",
+        "domain": [
+          "geosite:private",
+          "domain:ir",
+          "domain:localhost",
+          "domain:local",
+          "geosite:category-ir"
+        ]
+      },
+      {
+        "outboundTag": "direct",
+        "ip": ["geoip:private", "geoip:ir"]
+      },
+      {
+        "outboundTag": "block",
+        "ip": ["10.10.34.0/24", "2001:4188:2:600::/64"]
+      },
+      {
+        "outboundTag": "tor-out",
+        "ip": ["0.0.0.0/0", "::/0"]
+      },
+      {"outboundTag": "block", "port": "0-65535"}
+    ]
+  }
+}

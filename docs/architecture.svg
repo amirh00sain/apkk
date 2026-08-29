@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="760" viewBox="0 0 1000 760" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#555"/>
+    </marker>
+    <style>
+      .box { fill:#ffffff; stroke:#3b6fb0; stroke-width:1.5; rx:6; }
+      .label { font-size:13px; fill:#1a2b44; font-weight:600; text-anchor:middle; }
+      .sub { font-size:10px; fill:#5a6b80; text-anchor:middle; }
+      .edge { stroke:#555; stroke-width:1.5; fill:none; marker-end:url(#arrow); }
+      .title { font-size:20px; fill:#1a2b44; font-weight:700; text-anchor:middle; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="760" fill="#f7f9fc"/>
+
+  <text x="500" y="34" class="title">NetProbe — Traffic Analysis &amp; CDN/TLS Inspection Architecture</text>
+
+  <!-- User Apps -->
+  <g>
+    <rect class="box" x="410" y="60" width="180" height="50" rx="6"/>
+    <text x="500" y="82" class="label">User Apps</text>
+    <text x="500" y="98" class="sub">browser / curl / games</text>
+  </g>
+
+  <!-- TUN -->
+  <g>
+    <rect class="box" x="410" y="140" width="180" height="50" rx="6"/>
+    <text x="500" y="162" class="label">TUN Layer</text>
+    <text x="500" y="178" class="sub">LinuxTun / WinDivert / PCAP</text>
+  </g>
+
+  <!-- Traffic Classifier -->
+  <g>
+    <rect class="box" x="380" y="220" width="240" height="50" rx="6"/>
+    <text x="500" y="242" class="label">Traffic Classifier</text>
+    <text x="500" y="258" class="sub">DNS / TLS / HTTP / UDP / TCP</text>
+  </g>
+
+  <!-- DNS Resolver + CDN Detector -->
+  <g>
+    <rect class="box" x="250" y="310" width="180" height="50" rx="6"/>
+    <text x="340" y="332" class="label">Domain Resolver</text>
+    <text x="340" y="348" class="sub">dig / dnspython / DoH</text>
+
+    <rect class="box" x="570" y="310" width="180" height="50" rx="6"/>
+    <text x="660" y="332" class="label">CDN Detector</text>
+    <text x="660" y="348" class="sub">Cloudflare/Akamai/Fastly</text>
+  </g>
+
+  <!-- Destination DB -->
+  <g>
+    <rect class="box" x="400" y="400" width="200" height="50" rx="6"/>
+    <text x="500" y="422" class="label">Destination DB</text>
+    <text x="500" y="438" class="sub">verified.json + SQLite</text>
+  </g>
+
+  <!-- Route Engine -->
+  <g>
+    <rect class="box" x="400" y="490" width="200" height="50" rx="6"/>
+    <text x="500" y="512" class="label">Route Engine</text>
+    <text x="500" y="528" class="sub">DIRECT / CDN / BLOCK / PRIVATE</text>
+  </g>
+
+  <!-- DIRECT / XRAY / BLOCK -->
+  <g>
+    <rect class="box" x="180" y="580" width="140" height="50" rx="6"/>
+    <text x="250" y="602" class="label">DIRECT</text>
+    <text x="250" y="618" class="sub">happy-eyeballs</text>
+
+    <rect class="box" x="430" y="580" width="140" height="50" rx="6"/>
+    <text x="500" y="602" class="label">XRAY</text>
+    <text x="500" y="618" class="sub">transport backend</text>
+
+    <rect class="box" x="680" y="580" width="140" height="50" rx="6"/>
+    <text x="750" y="602" class="label">BLOCK</text>
+    <text x="750" y="618" class="sub">private/blocklist</text>
+  </g>
+
+  <!-- Metrics + Probe Engine + Blocklist + CDN DB -->
+  <g>
+    <rect class="box" x="400" y="670" width="200" height="50" rx="6"/>
+    <text x="500" y="692" class="label">Metrics / Logging</text>
+    <text x="500" y="708" class="sub">prometheus-style counters</text>
+
+    <rect class="box" x="60" y="400" width="150" height="50" rx="6"/>
+    <text x="135" y="422" class="label">Probe Engine</text>
+    <text x="135" y="438" class="sub">icmp/tcp/tls</text>
+
+    <rect class="box" x="790" y="220" width="150" height="50" rx="6"/>
+    <text x="865" y="242" class="label">Blocklist</text>
+    <text x="865" y="258" class="sub">private + custom</text>
+
+    <rect class="box" x="790" y="400" width="150" height="50" rx="6"/>
+    <text x="865" y="422" class="label">CDN DB</text>
+    <text x="865" y="438" class="sub">data/cdn/*.json</text>
+  </g>
+
+  <!-- Edges -->
+  <line class="edge" x1="500" y1="110" x2="500" y2="138"/>
+  <line class="edge" x1="500" y1="190" x2="500" y2="218"/>
+  <line class="edge" x1="430" y1="245" x2="340" y2="308"/>
+  <line class="edge" x1="570" y1="245" x2="660" y2="308"/>
+  <line class="edge" x1="340" y1="360" x2="430" y2="398"/>
+  <line class="edge" x1="660" y1="360" x2="570" y2="398"/>
+  <line class="edge" x1="500" y1="450" x2="500" y2="488"/>
+  <line class="edge" x1="500" y1="540" x2="250" y2="578"/>
+  <line class="edge" x1="500" y1="540" x2="500" y2="578"/>
+  <line class="edge" x1="500" y1="540" x2="750" y2="578"/>
+  <line class="edge" x1="500" y1="630" x2="500" y2="668"/>
+  <line class="edge" x1="250" y1="580" x2="135" y2="448" marker-end="url(#arrow)"/>
+  <line class="edge" x1="500" y1="630" x2="865" y2="420" marker-end="url(#arrow)"/>
+  <line class="edge" x1="865" y1="270" x2="660" y2="305" marker-end="url(#arrow)"/>
+</svg>

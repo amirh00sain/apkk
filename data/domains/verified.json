@@ -1,0 +1,250 @@
+[
+  {
+    "hostname": "example.com",
+    "provider": null,
+    "ipv4": [
+      "172.66.147.243",
+      "104.20.23.154"
+    ],
+    "ipv6": [
+      "2606:4700:10::6814:179a",
+      "2606:4700:10::ac42:93f3"
+    ],
+    "cname_chain": [],
+    "tls_valid": true,
+    "certificate_names": [
+      "example.com",
+      "*.example.com"
+    ],
+    "latency_ms": 134.8,
+    "first_seen": "2026-08-28T19:58:24.313545Z",
+    "last_seen": "2026-08-28T19:58:24.313545Z",
+    "last_verified": "2026-08-28T19:58:24.313545Z",
+    "source": [
+      "dnspython"
+    ],
+    "status": "tls_verified"
+  },
+  {
+    "hostname": "google.com",
+    "provider": null,
+    "ipv4": [
+      "216.239.38.120"
+    ],
+    "ipv6": [
+      "2001:4860:4802:32::78"
+    ],
+    "cname_chain": [],
+    "tls_valid": true,
+    "certificate_names": [
+      "*.google.com",
+      "*.appengine.google.com",
+      "*.bdn.dev",
+      "*.origin-test.bdn.dev",
+      "*.cloud.google.com",
+      "*.crowdsource.google.com",
+      "*.datacompute.google.com",
+      "*.google.ca",
+      "*.google.cl",
+      "*.google.co.in",
+      "*.google.co.jp",
+      "*.google.co.uk",
+      "*.google.com.ar",
+      "*.google.com.au",
+      "*.google.com.br",
+      "*.google.com.co",
+      "*.google.com.mx",
+      "*.google.com.tr",
+      "*.google.com.vn",
+      "*.google.de",
+      "*.google.es",
+      "*.google.fr",
+      "*.google.hu",
+      "*.google.it",
+      "*.google.nl",
+      "*.google.pl",
+      "*.google.pt",
+      "*.gemini.cloud.google.com",
+      "*.gstatic.com",
+      "*.metric.gstatic.com",
+      "*.gvt1.com",
+      "*.gcpcdn.gvt1.com",
+      "*.gvt2.com",
+      "*.gcp.gvt2.com",
+      "*.url.google.com",
+      "*.youtube-nocookie.com",
+      "*.ytimg.com",
+      "ai.android",
+      "android.com",
+      "*.android.com",
+      "*.flash.android.com",
+      "g.co",
+      "*.g.co",
+      "goo.gl",
+      "www.goo.gl",
+      "google-analytics.com",
+      "*.google-analytics.com",
+      "google.com",
+      "googlecommerce.com",
+      "*.googlecommerce.com",
+      "urchin.com",
+      "*.urchin.com",
+      "youtu.be",
+      "youtube.com",
+      "*.youtube.com",
+      "music.youtube.com",
+      "*.music.youtube.com",
+      "youtubeeducation.com",
+      "*.youtubeeducation.com",
+      "youtubekids.com",
+      "*.youtubekids.com",
+      "yt.be",
+      "*.yt.be",
+      "android.clients.google.com",
+      "*.aistudio.google.com"
+    ],
+    "latency_ms": 53.0,
+    "first_seen": "2026-08-28T19:39:42.454235Z",
+    "last_seen": "2026-08-28T19:39:42.454235Z",
+    "last_verified": "2026-08-28T19:39:42.454235Z",
+    "source": [
+      "dnspython"
+    ],
+    "status": "tls_verified"
+  },
+  {
+    "hostname": "github.com",
+    "provider": null,
+    "ipv4": [
+      "140.82.121.4"
+    ],
+    "ipv6": [],
+    "cname_chain": [],
+    "tls_valid": true,
+    "certificate_names": [
+      "github.com",
+      "www.github.com"
+    ],
+    "latency_ms": 134.9,
+    "first_seen": "2026-08-28T19:35:59.822055Z",
+    "last_seen": "2026-08-28T19:35:59.822055Z",
+    "last_verified": "2026-08-28T19:35:59.822055Z",
+    "source": [
+      "dnspython"
+    ],
+    "status": "tls_verified"
+  },
+  {
+    "hostname": "cloudflare.com",
+    "provider": null,
+    "ipv4": [
+      "104.16.132.229",
+      "104.16.133.229"
+    ],
+    "ipv6": [
+      "2606:4700::6810:84e5",
+      "2606:4700::6810:85e5"
+    ],
+    "cname_chain": [],
+    "tls_valid": true,
+    "certificate_names": [
+      "cloudflare.com",
+      "ns.cloudflare.com",
+      "*.ns.cloudflare.com",
+      "*.secondary.cloudflare.com",
+      "secondary.cloudflare.com"
+    ],
+    "latency_ms": 112.8,
+    "first_seen": "2026-08-28T19:39:49.001836Z",
+    "last_seen": "2026-08-28T19:39:49.001836Z",
+    "last_verified": "2026-08-28T19:39:49.001836Z",
+    "source": [
+      "dnspython"
+    ],
+    "status": "tls_verified"
+  },
+  {
+    "hostname": "wikipedia.org",
+    "provider": null,
+    "ipv4": [
+      "185.15.59.224"
+    ],
+    "ipv6": [
+      "2a02:ec80:300:ed1a::1"
+    ],
+    "cname_chain": [],
+    "tls_valid": true,
+    "certificate_names": [
+      "*.m.mediawiki.org",
+      "*.m.wikibooks.org",
+      "*.m.wikidata.org",
+      "*.m.wikimedia.org",
+      "*.m.wikinews.org",
+      "*.m.wikipedia.org",
+      "*.m.wikiquote.org",
+      "*.m.wikisource.org",
+      "*.m.wikiversity.org",
+      "*.m.wikivoyage.org",
+      "*.m.wiktionary.org",
+      "*.mediawiki.org",
+      "*.planet.wikimedia.org",
+      "*.wikibooks.org",
+      "*.wikidata.org",
+      "*.wikifunctions.org",
+      "*.wikimedia.org",
+      "*.wikimediafoundation.org",
+      "*.wikinews.org",
+      "*.wikipedia.org",
+      "*.wikiquote.org",
+      "*.wikisource.org",
+      "*.wikiversity.org",
+      "*.wikivoyage.org",
+      "*.wiktionary.org",
+      "*.wmfusercontent.org",
+      "mediawiki.org",
+      "w.wiki",
+      "wikibooks.org",
+      "wikidata.org",
+      "wikifunctions.org",
+      "wikimedia.org",
+      "wikimediafoundation.org",
+      "wikinews.org",
+      "wikipedia.org",
+      "wikiquote.org",
+      "wikisource.org",
+      "wikiversity.org",
+      "wikivoyage.org",
+      "wiktionary.org",
+      "wmfusercontent.org"
+    ],
+    "latency_ms": 140.9,
+    "first_seen": "2026-08-28T19:36:08.630867Z",
+    "last_seen": "2026-08-28T19:36:08.630867Z",
+    "last_verified": "2026-08-28T19:36:08.630867Z",
+    "source": [
+      "dnspython"
+    ],
+    "status": "tls_verified"
+  },
+  {
+    "hostname": "render.com",
+    "provider": null,
+    "ipv4": [
+      "216.24.57.1"
+    ],
+    "ipv6": [],
+    "cname_chain": [],
+    "tls_valid": true,
+    "certificate_names": [
+      "render.com"
+    ],
+    "latency_ms": 115.3,
+    "first_seen": "2026-08-28T19:41:03.310766Z",
+    "last_seen": "2026-08-28T19:41:03.310766Z",
+    "last_verified": "2026-08-28T19:41:03.310766Z",
+    "source": [
+      "dnspython"
+    ],
+    "status": "tls_verified"
+  }
+]

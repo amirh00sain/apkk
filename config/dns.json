@@ -1,0 +1,25 @@
+{
+  "providers": {
+    "cloudflare": {
+      "name": "Cloudflare",
+      "doh_url": "https://cloudflare-dns.com/dns-query",
+      "doh_json": "https://cloudflare-dns.com/cdn-cgi/trace",
+      "ips": ["1.1.1.1", "1.0.0.1", "2606:4700:4700::1111", "2606:4700:4700::1001"]
+    },
+    "google": {
+      "name": "Google",
+      "doh_url": "https://dns.google/dns-query",
+      "ips": ["8.8.8.8", "8.8.4.4", "2001:4860:4860::8888", "2001:4860:4860::8844"]
+    },
+    "quad9": {
+      "name": "Quad9",
+      "doh_url": "https://dns.quad9.net/dns-query",
+      "ips": ["9.9.9.9", "149.112.112.112", "2620:fe::fe", "2620:fe::9"]
+    },
+    "custom": {
+      "name": "Custom",
+      "doh_url": "https://dns.example.com/dns-query",
+      "ips": []
+    }
+  }
+}

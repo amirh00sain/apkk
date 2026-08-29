@@ -1,0 +1,29 @@
+{
+  "example.com": {
+    "A": ["93.184.216.34"],
+    "AAAA": ["2606:2800:220:1:248:1893:25c8:1946"],
+    "CNAME": [],
+    "TXT": ["v=spf1 -all"],
+    "ttl": 3600,
+    "latency_ms": 12.3,
+    "source": "fixture"
+  },
+  "www.cloudflare.com": {
+    "A": ["104.16.0.1", "104.16.123.4"],
+    "AAAA": ["2606:4700:10::6810:1"],
+    "CNAME": ["cf-frontend.net"],
+    "TXT": [],
+    "ttl": 300,
+    "latency_ms": 8.1,
+    "source": "fixture"
+  },
+  "internal.host.local": {
+    "A": ["10.10.34.5"],
+    "AAAA": [],
+    "CNAME": [],
+    "TXT": [],
+    "ttl": 60,
+    "latency_ms": 1.0,
+    "source": "fixture"
+  }
+}

@@ -1,0 +1,34 @@
+[
+  {
+    "hostname": "example.com",
+    "ip": "93.184.216.34",
+    "sni": "example.com",
+    "tls_valid": true,
+    "issuer": "C=US, O=Let's Encrypt, CN=R3",
+    "subject": "CN=example.com",
+    "valid_from": "2024-01-01T00:00:00+00:00",
+    "valid_to": "2024-12-31T23:59:59+00:00",
+    "tls_version": "TLSv1.3",
+    "cipher": "TLS_AES_256_GCM_SHA384",
+    "san_list": ["example.com", "www.example.com"],
+    "alpn": ["h2", "http/1.1"],
+    "success": true,
+    "latency_ms": 42.0
+  },
+  {
+    "hostname": "mismatch.example.com",
+    "ip": "93.184.216.34",
+    "sni": "mismatch.example.com",
+    "tls_valid": true,
+    "issuer": "C=US, O=Test CA, CN=Test",
+    "subject": "CN=other.example.org",
+    "valid_from": "2024-01-01T00:00:00+00:00",
+    "valid_to": "2024-12-31T23:59:59+00:00",
+    "tls_version": "TLSv1.3",
+    "cipher": "TLS_AES_256_GCM_SHA384",
+    "san_list": ["other.example.org"],
+    "alpn": ["http/1.1"],
+    "success": true,
+    "latency_ms": 38.0
+  }
+]

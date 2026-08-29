@@ -1,0 +1,4 @@
+# Git LFS — binary artifacts stored in repo (dist/latest/)
+dist/latest/*.AppImage filter=lfs diff=lfs merge=lfs -text
+dist/latest/*.zip      filter=lfs diff=lfs merge=lfs -text
+dist/latest/*.apk      filter=lfs diff=lfs merge=lfs -text

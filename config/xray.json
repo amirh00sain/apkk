@@ -1,0 +1,136 @@
+{
+  "remarks": "NetProbe generated config — credits: @patterniha (SNI-Spoofing project reference)",
+  "log": {
+    "loglevel": "warning",
+    "dnsLog": false,
+    "access": "none"
+  },
+  "policy": {
+    "levels": {
+      "0": {
+        "uplinkOnly": 0,
+        "downlinkOnly": 0
+      },
+      "1": {
+        "uplinkOnly": 0,
+        "downlinkOnly": 0,
+        "connIdle": 6
+      }
+    }
+  },
+  "dns": {
+    "queryStrategy": "UseSystem",
+    "useSystemHosts": true,
+    "serveStale": true,
+    "servers": [
+      {
+        "address": "localhost",
+        "domains": [],
+        "finalQuery": true
+      },
+      {
+        "tag": "no-filter-dns",
+        "address": "https://cloudflare-dns.com/dns-query",
+        "timeoutMs": 6000,
+        "finalQuery": true
+      }
+    ]
+  },
+  "inbounds": [
+    {
+      "tag": "mixed-in",
+      "port": 10808,
+      "protocol": "mixed",
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "fakedns",
+          "tls",
+          "http",
+          "quic"
+        ],
+        "routeOnly": false
+      },
+      "settings": {
+        "udp": true,
+        "ip": "127.0.0.1"
+      },
+      "streamSettings": {
+        "sockopt": {
+          "tcpKeepAliveInterval": 1,
+          "tcpKeepAliveIdle": 11
+        }
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "block",
+      "protocol": "block"
+    },
+    {
+      "tag": "direct",
+      "protocol": "direct",
+      "streamSettings": {
+        "sockopt": {
+          "domainStrategy": "ForceIP",
+          "happyEyeballs": {
+            "tryDelayMs": 300,
+            "prioritizeIPv6": false,
+            "interleave": 2,
+            "maxConcurrentTry": 20
+          }
+        }
+      }
+    },
+    {
+      "tag": "dns-out",
+      "protocol": "dns",
+      "settings": {
+        "userLevel": 1
+      }
+    }
+  ],
+  "routing": {
+    "domainStrategy": "IPOnDemand",
+    "rules": [
+      {
+        "outboundTag": "dns-out",
+        "port": 53
+      },
+      {
+        "outboundTag": "direct",
+        "domain": [
+          "domain:ir",
+          "geosite:private",
+          "geosite:category-ir"
+        ]
+      },
+      {
+        "outboundTag": "direct",
+        "ip": [
+          "geoip:private",
+          "geoip:ir"
+        ]
+      },
+      {
+        "outboundTag": "block",
+        "ip": [
+          "10.10.34.0/24",
+          "2001:4188:2:600::/64"
+        ]
+      },
+      {
+        "outboundTag": "direct",
+        "ip": [
+          "0.0.0.0/0",
+          "::/0"
+        ]
+      },
+      {
+        "outboundTag": "block",
+        "port": "0-65535"
+      }
+    ]
+  }
+}

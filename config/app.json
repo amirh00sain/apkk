@@ -1,0 +1,36 @@
+{
+  "mode": "lab",
+  "credits": "Reference implementation: @patterniha (SNI-Spoofing project). This tool is measurement/analysis only; packet injection is out of scope.",
+  "tun": {
+    "enabled": false,
+    "mtu": 1500,
+    "name": "tun0"
+  },
+  "dns": {
+    "provider": "cloudflare",
+    "doh": true,
+    "timeout_ms": 6000,
+    "cache_enabled": true
+  },
+  "private_block": true,
+  "cdn_detection": true,
+  "xray": {
+    "enabled": true,
+    "binary": "bin/xray",
+    "config_path": "config/xray.json"
+  },
+  "xray_proxy": {
+    "tor": false,
+    "tor_socks_host": "127.0.0.1",
+    "tor_socks_port": 9050,
+    "fragment": true
+  },
+  "profiles": ["baseline"],
+  "resource_limits": {
+    "max_concurrent_probes": 50,
+    "max_dns_cache": 10000,
+    "connection_timeout": 5.0,
+    "tls_timeout": 8.0,
+    "process_timeout": 30.0
+  }
+}

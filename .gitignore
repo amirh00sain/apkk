@@ -1,0 +1,40 @@
+# Byte-compiled
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual env
+.venv/
+venv/
+
+# Binaries
+bin/
+*.exe
+
+# Build outputs
+build/
+dist/*.AppImage
+dist/*.zip
+dist/*.apk
+!dist/latest/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# LFS temp
+*.lock
+
+# Gradle build outputs (committed wrapper)
+android/.gradle/
+android/local.properties
+android/app/build/
+android/build/
+android/captures/
+*.jks
+*.keystore
+SNI-Spoofing-main/

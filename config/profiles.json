@@ -1,0 +1,71 @@
+{
+  "baseline": {
+    "description": "Default measurement profile",
+    "prefer_ipv6": true,
+    "ipv4_fallback": true,
+    "udp_support": true,
+    "quic_policy": "observe",
+    "mtu_aware": true,
+    "connection_reuse": true,
+    "packet_manipulation": false,
+    "laboratory_setting": false
+  },
+  "low_latency": {
+    "description": "Minimise probe overhead",
+    "prefer_ipv6": true,
+    "ipv4_fallback": true,
+    "udp_support": true,
+    "quic_policy": "observe",
+    "mtu_aware": true,
+    "connection_reuse": true,
+    "packet_manipulation": false,
+    "laboratory_setting": false
+  },
+  "fragmentation_analysis": {
+    "description": "Measurement-only packet size analysis",
+    "prefer_ipv6": true,
+    "ipv4_fallback": true,
+    "udp_support": true,
+    "quic_policy": "observe",
+    "mtu_aware": true,
+    "connection_reuse": true,
+    "packet_manipulation": false,
+    "laboratory_setting": true
+  },
+  "dns_analysis": {
+    "description": "Deep DNS inspection",
+    "prefer_ipv6": true,
+    "ipv4_fallback": true,
+    "udp_support": true,
+    "quic_policy": "observe",
+    "mtu_aware": true,
+    "connection_reuse": true,
+    "packet_manipulation": false,
+    "laboratory_setting": true
+  },
+  "tls_analysis": {
+    "description": "TLS certificate and SNI telemetry",
+    "prefer_ipv6": true,
+    "ipv4_fallback": true,
+    "udp_support": true,
+    "quic_policy": "observe",
+    "mtu_aware": true,
+    "connection_reuse": true,
+    "packet_manipulation": false,
+    "laboratory_setting": true
+  },
+  "gaming_measurement": {
+    "description": "Gaming profile: low latency, UDP/QUIC aware, NO transformation",
+    "prefer_ipv6": true,
+    "ipv4_fallback": true,
+    "udp_support": true,
+    "quic_policy": "prefer",
+    "mtu_aware": true,
+    "connection_reuse": true,
+    "packet_manipulation": false,
+    "laboratory_setting": false,
+    "fragmentation_analysis": false,
+    "dns_analysis": false,
+    "tls_analysis": false
+  }
+}

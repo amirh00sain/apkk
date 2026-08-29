@@ -1,0 +1,15 @@
+{
+  "name": "web",
+  "description": "Standard web traffic analysis profile",
+  "prefer_ipv6": true,
+  "ipv4_fallback": true,
+  "udp_support": true,
+  "quic_policy": "observe",
+  "mtu_aware": true,
+  "connection_reuse": true,
+  "packet_manipulation": false,
+  "laboratory_setting": false,
+  "fragmentation_analysis": false,
+  "dns_analysis": true,
+  "tls_analysis": true
+}
