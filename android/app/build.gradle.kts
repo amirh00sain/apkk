@@ -38,15 +38,8 @@ android {
         jvmTarget = "17"
     }
 
-    // ABI filters — only ship arm64 (covers most modern devices).
-    splits {
-        abi {
-            isEnable = true
-            reset()
-            include("arm64-v8a", "x86_64")
-            isUniversalApk = false
-        }
-    }
+    // No native libs in this app (xray is extracted from assets at runtime),
+    // so we build a single universal APK — no ABI splits.
 }
 
 dependencies {
