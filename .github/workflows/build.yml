@@ -40,7 +40,9 @@ jobs:
       - name: Fetch xray (linux)
         run: python scripts/fetch_xray.py -o bin
       - name: Flet build linux
-        run: flet build linux
+        env:
+          PYTHONIOENCODING: utf-8
+        run: yes | flet build linux
       - name: Wrap AppImage
         run: |
           # linuxdeploy AppImage wrapper (Flet >= 0.24 creates a Linux build dir)
@@ -71,7 +73,10 @@ jobs:
       - name: Fetch xray (windows)
         run: python scripts/fetch_xray.py -o bin
       - name: Flet build windows
-        run: flet build windows
+        shell: bash
+        env:
+          PYTHONIOENCODING: utf-8
+        run: yes | flet build windows
       - name: Package zip
         run: |
           $dist = "dist/NetProbe-windows.zip"
@@ -105,7 +110,7 @@ jobs:
       - name: Flet build web (for WebView assets)
         run: |
           mkdir -p android/app/src/main/assets/web
-          flet build web
+          yes | flet build web
           cp -r build/web/* android/app/src/main/assets/web/
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
