@@ -30,9 +30,13 @@ A single-center **Connect/Disconnect** button that spins up the full
 
 | Output     | How                         | TUN mode                  |
 |------------|-----------------------------|---------------------------|
-| **Linux**  | `flet build linux` + AppImage   | Real Linux TUN (CAP_NET_ADMIN) |
-| **Windows**| `flet build windows`            | xray `mixed` on 127.0.0.1 (WinDivert out of scope) |
+| **Linux**  | PyInstaller + AppImage          | Real Linux TUN (CAP_NET_ADMIN) |
+| **Windows**| PyInstaller (onefile)           | xray `mixed` on 127.0.0.1 (WinDivert out of scope) |
 | **Android**| Gradle + VpnService (Kotlin)    | Real Android TUN via `VpnService` |
+
+> **Note on Flet:** the GUI is written in Flet, but the CI builds use
+> **PyInstaller** (not `flet build`, which interactive-prompts for a bundled
+> Flutter SDK and fails headless in GitHub Actions).
 
 ## Local dev (desktop)
 

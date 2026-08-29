@@ -17,8 +17,7 @@ jobs:
           python-version: "3.13"
           cache: "pip"
       - name: Install deps
-        run: |
-          pip install -e ".[dev,gui]"
+        run: pip install -e ".[dev,gui]"
       - name: Run tests
         run: pytest -q --cov --cov-report=term
 
@@ -37,24 +36,43 @@ jobs:
         run: |
           pip install -e ".[dev,gui]"
           sudo apt-get update && sudo apt-get install -y patchelf desktop-file-utils
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: "3.27.1"
-          channel: stable
       - name: Fetch xray (linux)
         run: python scripts/fetch_xray.py -o bin
-      - name: Flet build linux
-        env:
-          PYTHONIOENCODING: utf-8
-        run: flet build linux
-      - name: Wrap AppImage
+      - name: PyInstaller bundle
         run: |
-          # linuxdeploy AppImage wrapper (Flet >= 0.24 creates a Linux build dir)
-          cd build/linux/x64/release/bundle
+          pyinstaller \
+            --noconfirm \
+            --onefile \
+            --name netprobe-gui \
+            --add-data "bin/xray:bin" \
+            --add-data "config:config" \
+            --hidden-import gui \
+            --hidden-import gui.backend \
+            gui/main.py
+      - name: Build AppImage
+        run: |
+          APPDIR=dist/AppDir
+          mkdir -p "$APPDIR/usr/bin" "$APPDIR/usr/share/applications"
+          cp dist/netprobe-gui "$APPDIR/usr/bin/"
+          cp bin/xray "$APPDIR/usr/bin/xray"
+          # .desktop file
+          cat > "$APPDIR/netprobe.desktop" << 'EOF'
+          [Desktop Entry]
+          Type=Application
+          Name=NetProbe
+          Exec=netprobe-gui
+          Icon=utilities-terminal
+          Categories=Network;
+          EOF
+          cp "$APPDIR/netprobe.desktop" "$APPDIR/usr/share/applications/"
+          # linuxdeploy
           wget -q https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
           chmod +x linuxdeploy-x86_64.AppImage
-          ./linuxdeploy-x86_64.AppImage --appdir . --output appimage
-          mv NetProbe-*.AppImage ../../../../dist/NetProbe-x86_64.AppImage
+          ./linuxdeploy-x86_64.AppImage \
+            --appdir "$APPDIR" \
+            --desktop-file "$APPDIR/netprobe.desktop" \
+            --output appimage
+          mv NetProbe-*.AppImage dist/NetProbe-x86_64.AppImage
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
@@ -74,21 +92,25 @@ jobs:
           cache: "pip"
       - name: Install deps
         run: pip install -e ".[dev,gui]"
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: "3.27.1"
-          channel: stable
       - name: Fetch xray (windows)
         run: python scripts/fetch_xray.py -o bin
-      - name: Flet build windows
-        shell: bash
-        env:
-          PYTHONIOENCODING: utf-8
-        run: flet build windows
+      - name: PyInstaller bundle
+        run: |
+          pyinstaller `
+            --noconfirm `
+            --onefile `
+            --name netprobe-gui `
+            --add-data "bin/xray.exe;bin" `
+            --add-data "config;config" `
+            --hidden-import gui `
+            --hidden-import gui.backend `
+            gui/main.py
       - name: Package zip
         run: |
           $dist = "dist/NetProbe-windows.zip"
-          Compress-Archive -Path "build/windows/x64/runner/Release/*" -DestinationPath $dist -Force
+          Compress-Archive -Path "dist/netprobe-gui.exe" -DestinationPath $dist -Force
+          # Bundle xray alongside
+          Compress-Archive -Path "dist/netprobe-gui.exe","bin/xray.exe" -DestinationPath $dist -Force
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
@@ -111,8 +133,6 @@ jobs:
         with:
           python-version: "3.13"
           cache: "pip"
-      - name: Install deps
-        run: pip install -e ".[dev,gui]"
       - name: Fetch xray (android arm64)
         run: python scripts/fetch_xray.py -o android/app/src/main/assets
       - name: Setup Android SDK
@@ -162,8 +182,6 @@ jobs:
         with:
           path: dist
           merge-multiple: true
-      - name: List artifacts
-        run: ls -la dist/
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:

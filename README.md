@@ -223,9 +223,12 @@ Disconnect tears everything down cleanly.
 
 | Output      | Command / wrapper                          | TUN |
 |-------------|--------------------------------------------|-----|
-| Linux AppImage | `flet build linux` + linuxdeploy         | Real Linux TUN (`CAP_NET_ADMIN`) |
-| Windows EXE    | `flet build windows`                     | xray `mixed` on `127.0.0.1` (WinDivert out of scope) |
+| Linux AppImage | PyInstaller + linuxdeploy                | Real Linux TUN (`CAP_NET_ADMIN`) |
+| Windows EXE    | PyInstaller `--onefile`                  | xray `mixed` on `127.0.0.1` (WinDivert out of scope) |
 | Android APK    | Gradle `VpnService` (Kotlin) + WebView   | Real Android TUN via `VpnService` |
+
+> `flet build` is not used in CI — it interactive-prompts for Flutter SDK.
+> Instead the workflow uses **PyInstaller** which is headless-friendly.
 
 ```bash
 # Tag a release to trigger all three builds:
