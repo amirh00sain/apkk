@@ -84,7 +84,7 @@ class VpnTunService : VpnService() {
 
             // Pump stderr to logcat.
             Thread {
-                xrayBinary!!.inputStream.bufferedReader().useLines { }
+                xrayProcess!!.errorStream.bufferedReader().useLines { }
                 Log.i(TAG, "xray stderr ended")
             }.start()
 
@@ -117,10 +117,16 @@ class VpnTunService : VpnService() {
     }
 
     private fun buildNotification(text: String): Notification {
-        return Notification.Builder(this, CHANNEL_ID)
+        val builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Notification.Builder(this, CHANNEL_ID)
+        } else {
+            @Suppress("DEPRECATION")
+            Notification.Builder(this)
+        }
+        return builder
             .setContentTitle("NetProbe")
             .setContentText(text)
-            .setSmallIcon(android.R.drawable.stat_sys_data_saver)
+            .setSmallIcon(android.R.drawable.ic_dialog_info)
             .build()
     }
 

@@ -53,7 +53,8 @@ jobs:
       - name: Bundle xray + build AppImage
         run: |
           APPDIR=dist/AppDir
-          mkdir -p "$APPDIR/usr/bin" "$APPDIR/usr/share/applications"
+          mkdir -p "$APPDIR/usr/bin" "$APPDIR/usr/share/applications" \
+                   "$APPDIR/usr/share/icons/hicolor/256x256/apps"
           cp dist/netprobe-gui "$APPDIR/usr/bin/netprobe-gui"
           cp bin/xray "$APPDIR/usr/bin/xray"
           # .desktop file
