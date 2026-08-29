@@ -35,6 +35,7 @@ jobs:
       - name: Install deps
         run: |
           pip install -e ".[dev,gui]"
+          pip install "pyinstaller>=6.0"
           sudo apt-get update && sudo apt-get install -y patchelf desktop-file-utils
       - name: Fetch xray (linux)
         run: python scripts/fetch_xray.py -o bin
@@ -43,6 +44,8 @@ jobs:
           pyinstaller \
             --noconfirm \
             --onefile \
+            --collect-all flet \
+            --collect-all flet_desktop \
             --name netprobe-gui \
             --add-data "bin/xray:bin" \
             --add-data "config:config" \
@@ -91,7 +94,9 @@ jobs:
           python-version: "3.13"
           cache: "pip"
       - name: Install deps
-        run: pip install -e ".[dev,gui]"
+        run: |
+          pip install -e ".[dev,gui]"
+          pip install "pyinstaller>=6.0"
       - name: Fetch xray (windows)
         run: python scripts/fetch_xray.py -o bin
       - name: PyInstaller bundle
@@ -99,6 +104,8 @@ jobs:
           pyinstaller `
             --noconfirm `
             --onefile `
+            --collect-all flet `
+            --collect-all flet_desktop `
             --name netprobe-gui `
             --add-data "bin/xray.exe;bin" `
             --add-data "config;config" `
