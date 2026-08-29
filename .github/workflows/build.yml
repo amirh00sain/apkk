@@ -148,7 +148,7 @@ jobs:
           key: gradle-${{ runner.os }}-${{ hashFiles('android/gradle/wrapper/gradle-wrapper.properties') }}
       - name: Generate debug keystore
         run: |
-          keytool -genkeypair -v -keystore debug.keystore -alias debug \
+          keytool -genkeypair -v -keystore android/debug.keystore -alias debug \
             -keyalg RSA -keysize 2048 -validity 10000 \
             -storepass android -keypass android \
             -dname "CN=NetProbe Debug,O=NetProbe,C=US"
