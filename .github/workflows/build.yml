@@ -67,6 +67,7 @@ jobs:
           Icon=utilities-terminal
           Categories=Network;
           EOF
+          sed -i 's/^          //' "$APPDIR/netprobe.desktop"
           cp "$APPDIR/netprobe.desktop" "$APPDIR/usr/share/applications/"
           # linuxdeploy
           wget -q https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
