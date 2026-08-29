@@ -37,12 +37,16 @@ jobs:
         run: |
           pip install -e ".[dev,gui]"
           sudo apt-get update && sudo apt-get install -y patchelf desktop-file-utils
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.27.1"
+          channel: stable
       - name: Fetch xray (linux)
         run: python scripts/fetch_xray.py -o bin
       - name: Flet build linux
         env:
           PYTHONIOENCODING: utf-8
-        run: yes | flet build linux
+        run: flet build linux
       - name: Wrap AppImage
         run: |
           # linuxdeploy AppImage wrapper (Flet >= 0.24 creates a Linux build dir)
@@ -70,13 +74,17 @@ jobs:
           cache: "pip"
       - name: Install deps
         run: pip install -e ".[dev,gui]"
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.27.1"
+          channel: stable
       - name: Fetch xray (windows)
         run: python scripts/fetch_xray.py -o bin
       - name: Flet build windows
         shell: bash
         env:
           PYTHONIOENCODING: utf-8
-        run: yes | flet build windows
+        run: flet build windows
       - name: Package zip
         run: |
           $dist = "dist/NetProbe-windows.zip"
